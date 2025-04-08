@@ -20,6 +20,14 @@
             color="primary"
             external
           />
+          <UButton
+            v-else
+            to="/todos"
+            icon="i-lucide-rocket"
+            label="Getting Started"
+            size="xl"
+            color="primary"
+          />
         </div>
       </div>
     </div>
