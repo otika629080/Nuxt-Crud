@@ -23,9 +23,9 @@ useHead({
 
 useSeoMeta({
   viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
-  title: 'Atidone',
+  title: 'Nuxt Todo',
   description:
-    'A Nuxt demo hosted with edge-side rendering, authentication and queyring a Cloudflare D1 database',
+    'シンプルで効率的なタスク管理アプリケーション。サーバーレスアーキテクチャとGitHub認証を採用。',
   ogImage: '/social-image.png',
   twitterImage: '/social-image.png',
   twitterCard: 'summary_large_image'
