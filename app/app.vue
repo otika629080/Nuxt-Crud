@@ -46,11 +46,11 @@ const items = [
   <UApp>
     <div class="min-h-screen flex flex-col">
       <!-- ナビゲーションバー -->
-      <nav class="bg-white/70 dark:bg-neutral-900/70 backdrop-blur-sm shadow-[0_1px_3px_0_rgba(0,0,0,0.1),0_1px_2px_-1px_rgba(0,0,0,0.1)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.3),0_1px_2px_-1px_rgba(0,0,0,0.3)] fixed w-full z-50">
+      <nav class="bg-white/60 dark:bg-black/60 backdrop-blur-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.3)] fixed w-full z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="flex justify-between items-center h-16">
+          <div class="flex justify-between items-center h-20">
             <div class="flex items-center">
-              <NuxtLink to="/" class="text-xl font-bold bg-gradient-to-r from-emerald-600 to-emerald-400 bg-clip-text text-transparent">
+              <NuxtLink to="/" class="text-2xl font-bold bg-gradient-to-r from-emerald-600 to-emerald-400 bg-clip-text text-transparent hover:from-emerald-500 hover:to-emerald-300 transition-all duration-300">
                 Nuxt Todo
               </NuxtLink>
             </div>
@@ -59,8 +59,9 @@ const items = [
               <UButton
                 square
                 variant="ghost"
-                color="neutral"
+                color="primary"
                 :icon="$colorMode.preference === 'dark' ? 'i-lucide-moon' : 'i-lucide-sun'"
+                class="text-emerald-600 dark:text-emerald-400"
                 @click="isDarkMode = !isDarkMode"
               />
               
@@ -79,9 +80,10 @@ const items = [
                   :items="items"
                 >
                   <UButton
-                    color="neutral"
+                    color="primary"
                     variant="ghost"
                     trailing-icon="i-lucide-chevron-down"
+                    class="text-emerald-950 dark:text-emerald-50"
                   >
                     <UAvatar
                       :src="`https://github.com/${user.login}.png`"
@@ -98,14 +100,14 @@ const items = [
       </nav>
 
       <!-- メインコンテンツ -->
-      <main class="flex-1 pt-16">
+      <main class="flex-1 pt-24">
         <NuxtPage />
       </main>
 
       <!-- フッター -->
-      <footer class="bg-gradient-to-b from-transparent to-emerald-50/20 dark:to-emerald-950/20 py-8 mt-auto">
+      <footer class="bg-gradient-to-b from-transparent via-emerald-50/5 to-emerald-100/10 dark:via-emerald-900/5 dark:to-emerald-900/10 py-8 mt-auto">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="text-center text-sm text-neutral-600 dark:text-neutral-400">
+          <div class="text-center text-sm text-emerald-600 dark:text-emerald-400">
             ©Akito Ichige
           </div>
         </div>
@@ -116,12 +118,12 @@ const items = [
 
 <style lang="postcss">
 body {
-  @apply font-sans text-neutral-900 bg-white dark:bg-neutral-900 dark:text-white;
+  @apply font-sans text-emerald-950 bg-white dark:text-emerald-50 dark:bg-black;
 }
 
 .page-enter-active,
 .page-leave-active {
-  transition: all 0.2s;
+  transition: all 0.3s ease;
 }
 .page-enter-from,
 .page-leave-to {

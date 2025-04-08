@@ -89,18 +89,18 @@ const { mutate: deleteTodo } = useMutation({
 </script>
 
 <template>
-  <div class="max-w-2xl mx-auto">
+  <div class="max-w-2xl mx-auto px-4 py-8">
     <form
-      class="flex flex-col gap-6"
+      class="flex flex-col gap-8"
       @submit.prevent="addTodo(newTodo)"
     >
-      <div class="flex items-center gap-3 p-3 bg-neutral-800/50 backdrop-blur-sm rounded-xl shadow-lg shadow-emerald-900/5">
+      <div class="flex items-center gap-3 p-4 bg-white/10 dark:bg-white/5 backdrop-blur-xl rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.3)]">
         <UInput
           ref="new-todo"
           v-model="newTodo"
           name="todo"
           :disabled="loading"
-          class="flex-1 bg-transparent border-0 focus:ring-0 placeholder-neutral-600"
+          class="flex-1 bg-transparent border-0 focus:ring-0 placeholder-emerald-600/40 dark:placeholder-emerald-400/40 text-lg"
           placeholder="write anything and hit enter to add"
           autocomplete="off"
           autofocus
@@ -117,21 +117,21 @@ const { mutate: deleteTodo } = useMutation({
         />
       </div>
 
-      <ul class="flex flex-col gap-2">
+      <ul class="flex flex-col gap-3">
         <li
           v-for="todo of todos"
           :key="todo.id"
-          class="group flex items-center gap-4 p-3 bg-neutral-800/50 backdrop-blur-sm rounded-xl transition-all duration-200 hover:bg-neutral-700/50"
+          class="group flex items-center gap-4 p-4 bg-white/10 dark:bg-white/5 backdrop-blur-xl rounded-2xl shadow-[0_4px_20px_rgb(0,0,0,0.08)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.2)] transition-all duration-300 hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] dark:hover:shadow-[0_8px_30px_rgba(0,0,0,0.3)] hover:-translate-y-0.5"
         >
           <USwitch
             :model-value="Boolean(todo.completed)"
             @update:model-value="toggleTodo(todo)"
-            class="!bg-neutral-700 data-[checked]:!bg-emerald-500"
+            class="!bg-emerald-100 dark:!bg-emerald-900/30 data-[checked]:!bg-emerald-500"
           />
 
           <span
-            class="flex-1 font-medium transition-all duration-200"
-            :class="[todo.completed ? 'line-through text-neutral-500' : 'text-neutral-200']"
+            class="flex-1 font-medium transition-all duration-200 text-emerald-950 dark:text-emerald-50"
+            :class="[todo.completed ? 'line-through opacity-50' : '']"
           >{{ todo.title }}</span>
 
           <UButton
