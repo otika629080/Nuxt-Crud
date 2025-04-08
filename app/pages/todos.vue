@@ -50,15 +50,15 @@ const { mutate: addTodo, isLoading: loading } = useMutation({
   onError(err) {
     if (isNuxtZodError(err)) {
       const title = err.data?.data.issues
-        .map(issue => issue.message)
+        .map((issue: { message: string }) => issue.message)
         .join('\n')
       if (title) {
-        toast.add({ title, color: 'red' })
+        toast.add({ title, color: 'error' })
       }
     }
     else {
       console.error(err)
-      toast.add({ title: 'Unexpected Error', color: 'red' })
+      toast.add({ title: 'Unexpected Error', color: 'error' })
     }
   }
 })
@@ -89,55 +89,73 @@ const { mutate: deleteTodo } = useMutation({
 </script>
 
 <template>
-  <form
-    class="flex flex-col gap-4"
-    @submit.prevent="addTodo(newTodo)"
-  >
-    <div class="flex items-center gap-2">
-      <UInput
-        ref="new-todo"
-        v-model="newTodo"
-        name="todo"
-        :disabled="loading"
-        class="flex-1"
-        placeholder="Make a Nuxt demo"
-        autocomplete="off"
-        autofocus
-        :ui="{ wrapper: 'flex-1' }"
-      />
-
-      <UButton
-        type="submit"
-        icon="i-lucide-plus"
-        :loading="loading"
-        :disabled="newTodo.trim().length === 0"
-      />
-    </div>
-
-    <ul class="divide-y divide-gray-200 dark:divide-gray-800">
-      <li
-        v-for="todo of todos"
-        :key="todo.id"
-        class="flex items-center gap-4 py-2"
-      >
-        <span
-          class="flex-1 font-medium"
-          :class="[todo.completed ? 'line-through text-gray-500' : '']"
-        >{{ todo.title }}</span>
-
-        <USwitch
-          :model-value="Boolean(todo.completed)"
-          @update:model-value="toggleTodo(todo)"
+  <div class="max-w-2xl mx-auto">
+    <form
+      class="flex flex-col gap-6"
+      @submit.prevent="addTodo(newTodo)"
+    >
+      <div class="flex items-center gap-3 p-3 bg-neutral-800/50 backdrop-blur-sm rounded-xl shadow-lg shadow-emerald-900/5">
+        <UInput
+          ref="new-todo"
+          v-model="newTodo"
+          name="todo"
+          :disabled="loading"
+          class="flex-1 bg-transparent border-0 focus:ring-0 placeholder-neutral-600"
+          placeholder="write anything and hit enter to add"
+          autocomplete="off"
+          autofocus
         />
 
         <UButton
-          color="error"
-          variant="soft"
-          size="xs"
-          icon="i-lucide-x"
-          @click="deleteTodo(todo)"
+          type="submit"
+          color="primary"
+          variant="solid"
+          :class="{ 'opacity-50': newTodo.trim().length === 0 }"
+          :icon="loading ? 'i-lucide-loader-2' : 'i-lucide-plus'"
+          :loading="loading"
+          :disabled="newTodo.trim().length === 0"
         />
-      </li>
-    </ul>
-  </form>
+      </div>
+
+      <ul class="flex flex-col gap-2">
+        <li
+          v-for="todo of todos"
+          :key="todo.id"
+          class="group flex items-center gap-4 p-3 bg-neutral-800/50 backdrop-blur-sm rounded-xl transition-all duration-200 hover:bg-neutral-700/50"
+        >
+          <USwitch
+            :model-value="Boolean(todo.completed)"
+            @update:model-value="toggleTodo(todo)"
+            class="!bg-neutral-700 data-[checked]:!bg-emerald-500"
+          />
+
+          <span
+            class="flex-1 font-medium transition-all duration-200"
+            :class="[todo.completed ? 'line-through text-neutral-500' : 'text-neutral-200']"
+          >{{ todo.title }}</span>
+
+          <UButton
+            color="error"
+            variant="ghost"
+            size="xs"
+            icon="i-lucide-trash-2"
+            class="opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+            @click="deleteTodo(todo)"
+          />
+        </li>
+      </ul>
+    </form>
+  </div>
 </template>
+
+<style>
+.todo-enter-active,
+.todo-leave-active {
+  transition: all 0.3s ease;
+}
+.todo-enter-from,
+.todo-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+</style>
