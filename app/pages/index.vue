@@ -13,7 +13,7 @@
         <div class="mt-10 flex justify-center gap-4">
           <UButton
             v-if="!loggedIn"
-            to="/api/auth/callback/github"
+            to="/api/auth/github"
             icon="i-simple-icons-github"
             label="GitHubで始める"
             size="xl"
