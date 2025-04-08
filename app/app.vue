@@ -70,7 +70,7 @@ const items = [
               
               <UButton
                 v-if="!loggedIn"
-                to="/api/auth/github"
+                to="/api/auth/callback/github"
                 icon="i-simple-icons-github"
                 label="Login with GitHub"
                 color="primary"
