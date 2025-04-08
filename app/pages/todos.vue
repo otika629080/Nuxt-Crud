@@ -101,7 +101,7 @@ const { mutate: deleteTodo } = useMutation({
           name="todo"
           :disabled="loading"
           class="flex-1 bg-transparent border-0 focus:ring-0 placeholder-emerald-600/40 dark:placeholder-emerald-400/40 text-lg"
-          placeholder="write anything and hit enter to add"
+          placeholder="タスクを入力してください"
           autocomplete="off"
           autofocus
         />
@@ -126,7 +126,7 @@ const { mutate: deleteTodo } = useMutation({
           <USwitch
             :model-value="Boolean(todo.completed)"
             @update:model-value="toggleTodo(todo)"
-            class="!bg-emerald-100 dark:!bg-emerald-900/30 data-[checked]:!bg-emerald-500"
+            class="!bg-emerald-100 dark:!bg-emerald-900/30 data-[checked]:!bg-emerald-500 rounded-full"
           />
 
           <span
