@@ -44,100 +44,88 @@ const items = [
 
 <template>
   <UApp>
-    <UContainer class="min-h-screen flex flex-col my-4">
-      <div class="mb-2 text-right">
-        <UButton
-          square
-          variant="ghost"
-          color="neutral"
-          :icon="
-            $colorMode.preference === 'dark' || $colorMode.preference === 'system'
-              ? 'i-lucide-moon'
-              : 'i-lucide-sun'
-          "
-          @click="isDarkMode = !isDarkMode"
-        />
-      </div>
-
-      <UCard variant="subtle">
-        <template #header>
-          <h3 class="text-lg font-semibold leading-6">
-            <NuxtLink to="/">
-              Atidone
-            </NuxtLink>
-          </h3>
-          <UButton
-            v-if="!loggedIn"
-            to="/api/auth/github"
-            icon="i-simple-icons-github"
-            label="Login with GitHub"
-            color="neutral"
-            size="xs"
-            external
-          />
-          <div
-            v-else
-            class="flex flex-wrap -mx-2 sm:mx-0"
-          >
-            <UButton
-              to="/todos"
-              icon="i-lucide-list"
-              label="Todos"
-              :color="$route.path === '/todos' ? 'primary' : 'neutral'"
-              variant="ghost"
-            />
-            <UButton
-              to="/optimistic-todos"
-              icon="i-lucide-sparkles"
-              label="Optimistic Todos"
-              :color="$route.path === '/optimistic-todos' ? 'primary' : 'neutral'"
-              variant="ghost"
-            />
-            <UDropdownMenu
-              v-if="user"
-              :items="items"
-            >
+    <div class="min-h-screen flex flex-col">
+      <!-- ナビゲーションバー -->
+      <nav class="bg-white/70 dark:bg-neutral-900/70 backdrop-blur-sm shadow-[0_1px_3px_0_rgba(0,0,0,0.1),0_1px_2px_-1px_rgba(0,0,0,0.1)] dark:shadow-[0_1px_3px_0_rgba(0,0,0,0.3),0_1px_2px_-1px_rgba(0,0,0,0.3)] fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex justify-between items-center h-16">
+            <div class="flex items-center">
+              <NuxtLink to="/" class="text-xl font-bold bg-gradient-to-r from-emerald-600 to-emerald-400 bg-clip-text text-transparent">
+                Nuxt Todo
+              </NuxtLink>
+            </div>
+            
+            <div class="flex items-center gap-4">
               <UButton
-                color="neutral"
+                square
                 variant="ghost"
-                trailing-icon="i-lucide-chevron-down"
-              >
-                <UAvatar
-                  :src="`https://github.com/${user.login}.png`"
-                  :alt="user.login"
-                  size="3xs"
-                />
-                {{ user.login }}
-              </UButton>
-            </UDropdownMenu>
+                color="neutral"
+                :icon="$colorMode.preference === 'dark' ? 'i-lucide-moon' : 'i-lucide-sun'"
+                @click="isDarkMode = !isDarkMode"
+              />
+              
+              <UButton
+                v-if="!loggedIn"
+                to="/api/auth/github"
+                icon="i-simple-icons-github"
+                label="Login with GitHub"
+                color="primary"
+                external
+              />
+              
+              <template v-else>
+                <UDropdownMenu
+                  v-if="user"
+                  :items="items"
+                >
+                  <UButton
+                    color="neutral"
+                    variant="ghost"
+                    trailing-icon="i-lucide-chevron-down"
+                  >
+                    <UAvatar
+                      :src="`https://github.com/${user.login}.png`"
+                      :alt="user.login"
+                      size="3xs"
+                    />
+                    {{ user.login }}
+                  </UButton>
+                </UDropdownMenu>
+              </template>
+            </div>
           </div>
-        </template>
-        <NuxtPage />
-      </UCard>
+        </div>
+      </nav>
 
-      <footer class="text-center mt-2">
-        <NuxtLink
-          href="https://github.com/atinux/atidone"
-          target="_blank"
-          class="text-sm text-neutral-500 hover:text-neutral-700"
-        >
-          GitHub
-        </NuxtLink>
-        ·
-        <NuxtLink
-          href="https://twitter.com/atinux"
-          target="_blank"
-          class="text-sm text-neutral-500 hover:text-neutral-700"
-        >
-          Twitter
-        </NuxtLink>
+      <!-- メインコンテンツ -->
+      <main class="flex-1 pt-16">
+        <NuxtPage />
+      </main>
+
+      <!-- フッター -->
+      <footer class="bg-gradient-to-b from-transparent to-emerald-50/20 dark:to-emerald-950/20 py-8 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center text-sm text-neutral-600 dark:text-neutral-400">
+            ©Akito Ichige
+          </div>
+        </div>
       </footer>
-    </UContainer>
+    </div>
   </UApp>
 </template>
 
 <style lang="postcss">
 body {
-  @apply font-sans text-neutral-950 bg-neutral-50 dark:bg-neutral-950 dark:text-neutral-50;
+  @apply font-sans text-neutral-900 bg-white dark:bg-neutral-900 dark:text-white;
+}
+
+.page-enter-active,
+.page-leave-active {
+  transition: all 0.2s;
+}
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+  transform: translateY(20px);
 }
 </style>
